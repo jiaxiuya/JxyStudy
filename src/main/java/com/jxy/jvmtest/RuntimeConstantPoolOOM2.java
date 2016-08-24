@@ -1,7 +1,4 @@
-package jxy.jvmtest;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.jxy.jvmtest;
 
 /**
  * Created by jiaxiuya

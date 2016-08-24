@@ -1,4 +1,4 @@
-package jxy.jvmtest;
+package com.jxy.jvmtest;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;

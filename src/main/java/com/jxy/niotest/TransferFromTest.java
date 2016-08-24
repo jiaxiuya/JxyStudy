@@ -1,4 +1,4 @@
-package jxy.niotest;
+package com.jxy.niotest;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

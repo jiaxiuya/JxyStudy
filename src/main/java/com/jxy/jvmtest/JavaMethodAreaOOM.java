@@ -1,4 +1,4 @@
-package jxy.jvmtest;
+package com.jxy.jvmtest;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;

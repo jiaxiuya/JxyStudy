@@ -1,4 +1,4 @@
-package jxy.jvmtest;
+package com.jxy.jvmtest;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package jxy.jvmtest;
+package com.jxy.jvmtest;
 
 public class BADLY_NAMED_CODE {
 

@@ -1,4 +1,4 @@
-package jxy.jvmtest;
+package com.jxy.jvmtest;
 
 /**
  * Created by jiaxiuya
