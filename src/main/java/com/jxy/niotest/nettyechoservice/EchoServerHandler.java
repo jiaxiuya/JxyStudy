@@ -24,10 +24,12 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("This is " + ++channelCount + " times receive client:[" + body + "]");
         body += "$_";
         ByteBuf echo = Unpooled.copiedBuffer(body.getBytes());
+        ctx.writeAndFlush(echo);
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
+        cause.printStackTrace();
+        ctx.close();
     }
 }
