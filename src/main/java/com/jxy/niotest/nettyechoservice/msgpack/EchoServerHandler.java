@@ -1,7 +1,5 @@
-package com.jxy.niotest.nettyechoservice;
+package com.jxy.niotest.nettyechoservice.msgpack;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -16,15 +14,15 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
-    int channelCount = 0;
-
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        String body = (String) msg;
-        System.out.println("This is " + ++channelCount + " times receive client:[" + body + "]");
-        body += "$_";
-        ByteBuf echo = Unpooled.copiedBuffer(body.getBytes());
-        ctx.writeAndFlush(echo);
+        System.out.println("Server receive the msapack message: " + msg);
+        ctx.write(msg);
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        ctx.flush();
     }
 
     @Override
