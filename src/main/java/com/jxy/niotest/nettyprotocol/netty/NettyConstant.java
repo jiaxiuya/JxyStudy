@@ -13,34 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jxy.niotest.aiotimeservice;
+package com.jxy.niotest.nettyprotocol.netty;
 
 /**
- * <类描述>
- * <功能详细描述>
- *
- * @author 贾秀亚
- * @version [版本号, 2015/10/19 14:00]
- * @see [相关类/方法]
- * @since [产品/模块版本]
+ * @author jiaxiuya
+ * @date 2016年3月15日
+ * @version 1.0
  */
-public class TimeClient {
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-	int port = 8080;
-	if (args != null && args.length > 0) {
-	    try {
-		port = Integer.valueOf(args[0]);
-	    } catch (NumberFormatException e) {
-		// 采用默认值
-	    }
-
-	}
-	new Thread(new AsyncTimeClientHandler("127.0.0.1", port),
-		"AIO-AsyncTimeClientHandler-001").start();
-
-    }
+public final class NettyConstant {
+    public static final String REMOTEIP = "127.0.0.1";
+    public static final int PORT = 8080;
+    public static final int LOCAL_PORT = 12088;
+    public static final String LOCALIP = "127.0.0.1";
 }

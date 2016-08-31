@@ -23,25 +23,41 @@
     </repositories>
 
     <dependencies>
-        <!-- http://mvnrepository.com/artifact/cglib/cglib-nodep -->
+
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>3.1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.4.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.msgpack/msgpack -->
         <dependency>
             <groupId>org.msgpack</groupId>
             <artifactId>msgpack</artifactId>
             <version>0.6.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.marshalling</groupId>
+            <artifactId>jboss-marshalling</artifactId>
+            <version>1.4.11.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jibx</groupId>
+            <artifactId>jibx-run</artifactId>
+            <version>1.2.6</version>
         </dependency>
 
     </dependencies>

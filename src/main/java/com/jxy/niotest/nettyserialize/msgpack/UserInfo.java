@@ -1,8 +1,6 @@
-package com.jxy.niotest.nettyechoservice.msgpack;
+package com.jxy.niotest.nettyserialize.msgpack;
 
 import org.msgpack.annotation.Message;
-
-import java.io.Serializable;
 
 /**
  * <类描述>

@@ -1,4 +1,4 @@
-package com.jxy.niotest.nettyechoservice.msgpack;
+package com.jxy.niotest.nettyserialize.msgpack;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
