@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config>
+    <className>com.jxy.designpattern.builder.RetrenchPlayerBuilder</className>
+</config>
