@@ -24,6 +24,9 @@ public class CompositeClient {
         frame.add(menu);
 
         Component window = new Frame();
+        Component wMenu = new Menu();
+        wMenu.setName("窗口菜单");
+        window.add(wMenu);
         window.add(frame);
 
         window.paint();
