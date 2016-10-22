@@ -13,7 +13,7 @@ import java.lang.reflect.Array;
  */
 public class ArraysTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         // using the Array class it is possible to create new arrays passing the type and the length via reflection
         String[] strArrayOne = (String[]) Array.newInstance(String.class, 10);
 
@@ -42,5 +42,23 @@ public class ArraysTest {
         for (int i = 0; i < Array.getLength(intArrayOne); ++i) {
             System.out.println("intArrayOne[" + i + "] : " + Array.getInt(intArrayOne, i));
         }
+
+        // retrieve the class from an instance
+        Class<String[]> stringArrayClassUsingInstance = String[].class;
+        System.out.println( "stringArrayClassUsingInstance is array: " + stringArrayClassUsingInstance.isArray() );
+
+        // using class for name and passing [I
+        Class<?> intArrayUsingClassForName = Class.forName( "[I" );
+        System.out.println( "intArrayUsingClassForName is array: " + intArrayUsingClassForName.isArray() );
+
+        // or [Ljava.lang.String
+        Class<?> stringArrayClassUsingClassForName = Class.forName( "[Ljava.lang.String;" );
+        System.out.println( "stringArrayClassUsingClassForName is array: "
+                + stringArrayClassUsingClassForName.isArray() );
+
+        // this has no much sense in my opinion since we are creating an array at runtime and
+        // getting the class to create a new one...
+        Class<? extends Object> stringArrayClassUsingDoubleLoop = Array.newInstance( String.class, 0 ).getClass();
+        System.out.println( "stringArrayClassUsingClassForName is array: " + stringArrayClassUsingDoubleLoop.isArray() );
     }
 }
