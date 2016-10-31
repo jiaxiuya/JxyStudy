@@ -1,4 +1,4 @@
-package com.jxy.designpattern.Bridge;
+package com.jxy.designpattern.bridge;
 
 /**
  * <类描述>
@@ -9,11 +9,11 @@ package com.jxy.designpattern.Bridge;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class TxtDataFormat extends DataFormat {
+public class PDFDataFormat extends DataFormat {
 
     @Override
     public void transformData() {
         String data = databaseReadInterface.readData();
-        System.out.println("转换数据为Txt格式" + data);
+        System.out.println("转换数据为PDF格式" + data);
     }
 }

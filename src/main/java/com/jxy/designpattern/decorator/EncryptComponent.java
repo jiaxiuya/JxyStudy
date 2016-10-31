@@ -1,7 +1,7 @@
-package com.jxy.designpattern.Bridge;
+package com.jxy.designpattern.decorator;
 
 /**
- * <类描述>
+ * <抽象构建类>
  * <功能详细描述>
  *
  * @author 贾秀亚
@@ -9,12 +9,11 @@ package com.jxy.designpattern.Bridge;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public interface DatabaseReadInterface {
+public abstract class EncryptComponent {
 
     /**
-     * 读取用户数据
-     *
+     * 基础加密
      * @return
      */
-    public String readData();
+    public abstract String baseEncrypt(String str);
 }

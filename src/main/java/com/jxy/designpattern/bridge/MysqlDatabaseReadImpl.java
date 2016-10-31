@@ -1,4 +1,4 @@
-package com.jxy.designpattern.Bridge;
+package com.jxy.designpattern.bridge;
 
 /**
  * <类描述>
@@ -9,10 +9,10 @@ package com.jxy.designpattern.Bridge;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class OracleDatabaseReadImpl implements DatabaseReadInterface {
+public class MysqlDatabaseReadImpl implements DatabaseReadInterface {
     @Override
     public String readData() {
-        System.out.println("读取Oracle数据库数据！");
-        return "Oracle数据库数据";
+        System.out.println("读取Mysql数据库数据！");
+        return "mysql数据库数据";
     }
 }

@@ -1,4 +1,4 @@
-package com.jxy.designpattern.Bridge;
+package com.jxy.designpattern.bridge;
 
 /**
  * <类描述>
