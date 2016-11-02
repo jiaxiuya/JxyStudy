@@ -1,6 +1,5 @@
-package com.jxy.designpattern.Facede;
+package com.jxy.designpattern.facede;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

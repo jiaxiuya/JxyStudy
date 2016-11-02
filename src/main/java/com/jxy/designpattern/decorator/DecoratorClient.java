@@ -12,6 +12,7 @@ package com.jxy.designpattern.decorator;
 public class DecoratorClient {
 
     public static void main(String[] args) {
+
         EncryptComponent encryptComponent = new BaseEncrypt();
 
         ComponentDecorator componentDecorator1 = new ReverseEncryptDecorator(encryptComponent);

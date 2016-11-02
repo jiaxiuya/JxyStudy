@@ -1,4 +1,4 @@
-package com.jxy.designpattern.Facede;
+package com.jxy.designpattern.facede;
 
 /**
  * <类描述>
