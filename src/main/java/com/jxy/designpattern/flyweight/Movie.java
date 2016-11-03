@@ -9,5 +9,9 @@ package com.jxy.designpattern.flyweight;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class test {
+public class Movie extends DocumentEditor{
+    @Override
+    String getDocument() {
+        return "美女视频";
+    }
 }
