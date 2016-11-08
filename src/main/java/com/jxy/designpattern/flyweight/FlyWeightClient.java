@@ -10,6 +10,7 @@ package com.jxy.designpattern.flyweight;
  * @since [产品/模块版本]
  */
 public class FlyWeightClient {
+
     public static void main(String[] args) {
         DocumentEditorFactory def = DocumentEditorFactory.getInstance();
         DocumentEditor movie = def.getDocumentByName("movie");
@@ -21,4 +22,5 @@ public class FlyWeightClient {
         movie2.display(new LocationSize(7.2, 8.3, 3.3, 4.4));
         picture.display(new LocationSize(3, 4, 5, 6));
     }
+
 }
