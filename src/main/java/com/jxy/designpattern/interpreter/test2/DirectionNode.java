@@ -1,0 +1,33 @@
+package com.jxy.designpattern.interpreter.test2;
+
+/**
+ * <类描述>
+ * <功能详细描述>
+ *
+ * @author 贾秀亚
+ * @version [版本号, 2016/11/16 11:13]
+ * @see [相关类/方法]
+ * @since [产品/模块版本]
+ */
+public class DirectionNode extends AbstractNode {
+    private String direction;
+
+    public DirectionNode(String direction) {
+        this.direction = direction;
+    }
+
+    //方向表达式的解释操作
+    public String interpret() {
+        if (direction.equalsIgnoreCase("up")) {
+            return "向上";
+        } else if (direction.equalsIgnoreCase("down")) {
+            return "向下";
+        } else if (direction.equalsIgnoreCase("left")) {
+            return "向左";
+        } else if (direction.equalsIgnoreCase("right")) {
+            return "向右";
+        } else {
+            return "无效指令";
+        }
+    }
+}
