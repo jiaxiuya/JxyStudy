@@ -8,20 +8,6 @@
     <artifactId>com.jxy</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <repositories>
-        <repository>
-            <id>nexus</id>
-            <name>local private nexus</name>
-            <url>http://repo2.maven.org/maven2/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <dependencies>
 
         <dependency>
@@ -83,7 +69,51 @@
             <artifactId>rocketmq-client</artifactId>
             <version>3.5.9</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.jstorm</groupId>
+            <artifactId>jstorm-core</artifactId>
+            <version>2.1.1</version>
+            <!-- keep jstorm out of the jar-with-dependencies -->
+            <!-- <scope>provided</scope> -->
+        </dependency>
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.7.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.handlers</resource>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.schemas</resource>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.jxy.jstorm.batch.SimpleBatchTopology</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 
 </project>
