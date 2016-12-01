@@ -1,7 +1,7 @@
 package com.jxy.jdk8.defaultfunction;
 
 /**
- * <接口中允许出现默认方法>
+ * <接口中允许出现默认方法，但是不可以用默认方法来重载equals，hashCode，toString方法>
  * <功能详细描述>
  *
  * @author 贾秀亚
