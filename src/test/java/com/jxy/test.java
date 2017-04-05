@@ -1,6 +1,6 @@
 package com.jxy;
 
-import java.util.Arrays;
+import java.time.LocalTime;
 
 /**
  * <类描述>
@@ -12,7 +12,22 @@ import java.util.Arrays;
  * @since [产品/模块版本]
  */
 public class test {
-    public static void main(String[] args) {
+    static volatile long a = 1L;
+
+    private void testVolatile(){
+        int nowTime = LocalTime.now().getMinute();
+        for (int i = 0; i < 1000; i++) {
+            Thread thread = new Thread(() -> {
+                System.out.println(a++);
+            });
+            thread.start();
+        }
+        int endTime = LocalTime.now().getMinute();
+        System.out.println("time = " + (endTime - nowTime));
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+       new test().testVolatile();
 
     }
 }

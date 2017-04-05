@@ -17,7 +17,6 @@ public class TestAnnotations {
         Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
         System.out.println(hints2.length);          // 2
 
-
         Hints hints1 = Person.class.getAnnotation(Hints.class);
         System.out.println(hints1.value().length);  // 2
     }
