@@ -8,6 +8,8 @@ import java.nio.file.OpenOption;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -166,10 +168,67 @@ public class StreamTest {
 
         // 空的时候抛出异常
         optional.orElseThrow(NoSuchMethodException::new);
+
+        // 通过flatMap来连续处理Optional
+        Optional.of(4).flatMap(s -> {
+            s = 100;
+            return Optional.ofNullable(s);
+        }).flatMap(s -> {
+            s = 101;
+            return Optional.ofNullable(s);
+        });
+    }
+
+    /**
+     * aggregate operation
+     */
+    private static void reduceTest() {
+        // aggregate the factorial
+        Stream<Integer> values = Stream.of(1, 2, 3, 4, 5, 6, 7, 8);
+        Optional<Integer> factorial = values.reduce((a, b) -> a * b);
+        System.out.println(factorial.get());
+
+        // add calculate origin
+        Stream<Integer> values1 = Stream.of(1, 2, 3, 4, 5, 6, 7, 8);
+        Integer factorialWithZero = values1.reduce(10, (a, b) -> a * b);
+        System.out.println(factorialWithZero);
+
+        // parameter different with result
+        Stream<String> values2 = Stream.of("1", "22", "333");
+        Integer result = values2.reduce(0, (sum, s) -> sum + s.length(), (sum1, sum2) -> sum1 + sum2);
+        System.out.println(result);
+        // we can use int stream mapToInt() instead of reduce like below
+        Stream<String> values3 = Stream.of("1", "22", "333");
+        int result1 = values3.mapToInt(String::length).sum();
+        System.out.println(result1);
+
+    }
+
+    /**
+     * collect stream final result
+     */
+    private static void collectResult() {
+        Stream<String> values = Stream.of("1", "22", "333");
+        TreeSet<String> treeSet = values.collect(Collectors.toCollection(TreeSet::new));
+
+
+        Stream<String> values1 = Stream.of("1", "22", "333");
+        List<String> list = values1.collect(Collectors.toList());
+
+        Stream<String> values2 = Stream.of("1", "22", "333");
+        Set<String> stringSet = values2.collect(Collectors.toSet());
+
+        Stream<String> values3 = Stream.of("1", "22", "333");
+        String str = values3.collect(Collectors.joining());
+
+        Stream<String> values4 = Stream.of("1", "22", "333");
+        IntSummaryStatistics intSummaryStatistics = values4.collect(Collectors.summarizingInt(Integer::parseInt));
+        System.out.println(intSummaryStatistics.getAverage());
+        System.out.println(intSummaryStatistics.getMax());
     }
 
 
     public static void main(String[] args) throws IOException, NoSuchMethodException {
-        optionalTest();
+        collectResult();
     }
 }

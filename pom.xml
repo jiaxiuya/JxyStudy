@@ -78,9 +78,14 @@
         <dependency>
             <groupId>com.alibaba.jstorm</groupId>
             <artifactId>jstorm-core</artifactId>
-            <version>2.1.1</version>
+            <version>2.2.1</version>
             <!-- keep jstorm out of the jar-with-dependencies -->
             <!-- <scope>provided</scope> -->
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.jstorm</groupId>
+            <artifactId>jstorm-all</artifactId>
+            <version>2.2.1</version>
         </dependency>
     </dependencies>
 
