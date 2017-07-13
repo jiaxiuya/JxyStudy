@@ -1,0 +1,26 @@
+package com.jxy.spring.threadpool;
+
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.concurrent.Executor;
+
+/**
+ * <类描述>
+ * <功能详细描述>
+ *
+ * @author 贾秀亚
+ * @version [版本号, 2017/7/13 14:08]
+ * @see [相关类/方法]
+ * @since [产品/模块版本]
+ */
+@Configuration
+@ComponentScan("com.jxy.spring.threadpool")
+@EnableScheduling
+public class TaskSchedulingConfig {
+}
