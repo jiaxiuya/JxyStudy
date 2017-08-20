@@ -18,7 +18,7 @@ import java.util.concurrent.Future;
 public class ProducerTest {
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "172.18.173.131:9092");
+        props.put("bootstrap.servers", "192.168.1.112:9092");
         //  ack配置，控制请求被视为完整的标准。我们已经指定了“all”，这会阻塞提交完整的消息，这种设置性能最低，但是是最可靠的。
         props.put("acks", "all");
         //  retries，如果请求失败，生产者会自动重试，我们指定是0次，如果启用多次，则会有重复消息的可能性。

@@ -17,7 +17,8 @@ import com.alibaba.rocketmq.remoting.common.RemotingHelper;
  */
 public class ProducerTest {
     public static void main(String[] args) throws MQClientException, InterruptedException {
-        DefaultMQProducer producer = new DefaultMQProducer("192.168.1.112:9876"); // (1)
+        DefaultMQProducer producer = new DefaultMQProducer("rmq-group"); // (1)
+        producer.setNamesrvAddr("192.168.1.112:9876");
         producer.start(); // (2)
         for (int i = 0; i < 1000; i++) {
             try {
