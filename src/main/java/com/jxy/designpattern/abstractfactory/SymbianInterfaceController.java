@@ -10,8 +10,10 @@ package com.jxy.designpattern.abstractfactory;
  * @since [产品/模块版本]
  */
 public class SymbianInterfaceController implements SymbianController {
+
     @Override
     public void display() {
         System.out.println("Symbian系统的接口类！");
     }
+
 }
