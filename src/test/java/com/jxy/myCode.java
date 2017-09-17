@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 
-class myCode {
+public class myCode {
 
     public static void main(String[] args) throws Exception {
 
@@ -26,10 +26,10 @@ class myCode {
             List<List<String>> result = new ArrayList<>();
 
             File[] files = file.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].getPath().endsWith(".log")) {
+            for (File file1 : files) {
+                if (file1.getPath().endsWith(".log")) {
                     //使用ExecutorService执行Callable类型的任务，并将结果保存在future变量中
-                    Future<List<String>> future = executorService.submit(new TaskWithResult(files[i]));
+                    Future<List<String>> future = executorService.submit(new TaskWithResult(file1));
                     //将任务执行结果存储到List中
                     resultList.add(future);
                 }
@@ -51,18 +51,13 @@ class myCode {
 
             Map<String, Integer> stringMap = new ConcurrentHashMap<>();
             // 将结果去重
-            for (int i = 0; i < result.size(); i++) {
-                List<String> strings = result.get(i);
-                executorService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int j = 0; j < strings.size(); j++) {
-                            String str = strings.get(j);
-                            if (stringMap.containsKey(str)) {
-                                stringMap.put(str, stringMap.get(str) + 1);
-                            } else {
-                                stringMap.put(str, 1);
-                            }
+            for (List<String> strings : result) {
+                executorService.execute(() -> {
+                    for (String str : strings) {
+                        if (stringMap.containsKey(str)) {
+                            stringMap.put(str, stringMap.get(str) + 1);
+                        } else {
+                            stringMap.put(str, 1);
                         }
                     }
                 });
@@ -71,14 +66,8 @@ class myCode {
 
             // 从小到大排序
             List<Map.Entry<String, Integer>> list = new ArrayList<>(stringMap.entrySet());
-            Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-                //升序排序
-                public int compare(Map.Entry<String, Integer> o1,
-                                   Map.Entry<String, Integer> o2) {
-                    return o1.getKey().compareTo(o2.getKey());
-                }
-
-            });
+            //升序排序
+            Collections.sort(list, Comparator.comparing(Map.Entry::getKey));
 
             // 遍历输出
             for (Map.Entry<String, Integer> mapping : list) {
@@ -118,7 +107,7 @@ class TaskWithResult implements Callable<List<String>> {
             if (reader != null) {
                 try {
                     reader.close();
-                } catch (IOException e1) {
+                } catch (IOException ignored) {
                 }
             }
         }

@@ -1,8 +1,5 @@
 package com.jxy;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -24,10 +21,11 @@ public class testThread {
 
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(10, 20, 1000, TimeUnit.MILLISECONDS, blockingQueue);
 
-        while (true){
+        while (true) {
             poolExecutor.submit(new TestThreadRun());
             System.out.println(poolExecutor.getQueue().size());
         }
+
 
     }
 
