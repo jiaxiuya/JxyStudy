@@ -1,20 +1,20 @@
 package com.jxy.jdk8.streamtest;
 
+import net.sf.cglib.core.Local;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.util.regex.Pattern.compile;
+
 /**
- * <类描述>
- * <功能详细描述>
+ * <类描述> <功能详细描述>
  *
  * @author 贾秀亚
  * @version [版本号, 2017/6/27 16:46]
@@ -23,7 +23,9 @@ import java.util.stream.Stream;
  */
 public class StreamTest {
     private static void useStream() throws IOException {
-        String contents = new String(Files.readAllBytes(Paths.get("D:\\workspace\\JxyStudy\\src\\main\\java\\com\\jxy\\jdk8\\streamtest\\test.txt")), StandardCharsets.UTF_8);
+        String contents = new String(Files.readAllBytes(
+            Paths.get("/Users/jiaxiuya/IdeaProjects/JxyStudy/src/main/java/com/jxy/jdk8/streamtest/test.txt")),
+            StandardCharsets.UTF_8);
         List<String> words = Arrays.asList(contents.split("\\r\\n"));
         long count = words.stream().filter(w -> w.length() > 5).count();
         System.out.println(count);
@@ -45,15 +47,15 @@ public class StreamTest {
 
         // 通过正则表达式创建Stream
         String charSequences = "123123123";
-        Stream<String> stringStream3 = Pattern.compile("[\\P{L}]").splitAsStream(charSequences);
+        Stream<String> stringStream3 = compile("[\\P{L}]").splitAsStream(charSequences);
 
         // 通过try-with-resource保证文件正常关闭
-        try (Stream<String> lines = Files.lines(Paths.get("D:\\workspace\\JxyStudy\\src\\main\\java\\com\\jxy\\jdk8\\streamtest\\test.txt"))) {
+        try (Stream<String> lines = Files.lines(
+            Paths.get("D:\\workspace\\JxyStudy\\src\\main\\java\\com\\jxy\\jdk8\\streamtest\\test.txt"))) {
             System.out.println(lines.count());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -87,7 +89,6 @@ public class StreamTest {
         return result.stream();
     }
 
-
     /**
      * 裁剪指定长度的流
      */
@@ -101,7 +102,9 @@ public class StreamTest {
         System.out.println();
 
         // 跳过N个流数据
-        String contents = new String(Files.readAllBytes(Paths.get("D:\\workspace\\JxyStudy\\src\\main\\java\\com\\jxy\\jdk8\\streamtest\\test.txt")), StandardCharsets.UTF_8);
+        String contents = new String(Files
+            .readAllBytes(Paths.get("D:\\workspace\\JxyStudy\\src\\main\\java\\com\\jxy\\jdk8\\streamtest\\test.txt")),
+            StandardCharsets.UTF_8);
         List<String> words = Arrays.asList(contents.split("\\r\\n"));
         long count = words.stream().skip(1).count();
         System.out.println("跳过了一个流 " + count);
@@ -110,7 +113,8 @@ public class StreamTest {
         Stream<Character> combined = Stream.concat(characterStream("Hello"), characterStream("Word"));
 
         // 使用Peek获得一个和原始流具有相同元素的流，但是在每次获取元素时，都会执行自定义的动作
-        Object[] powers = Stream.iterate(1.0, p -> p * 2).peek(e -> System.out.println("Fetching " + e)).limit(20).toArray();
+        Object[] powers = Stream.iterate(1.0, p -> p * 2).peek(e -> System.out.println("Fetching " + e)).limit(20)
+            .toArray();
     }
 
     /**
@@ -142,21 +146,31 @@ public class StreamTest {
         first.ifPresent(System.out::println);
 
         // 并行查找的时候，只要匹配到第一个就终止
-        Optional<String> any = Stream.of("You", "Are", "OK", "OO", "To").parallel().filter(s -> s.startsWith("O")).findAny();
+        Optional<String> any = Stream.of("You", "Are", "OK", "OO", "To").parallel().filter(s -> s.startsWith("O"))
+            .findAny();
         any.ifPresent(System.out::println);
 
         // 匹配元素，还有allMatch，noneMatch
         Boolean isTrue = Stream.of("You", "Are", "OK", "OO", "To").parallel().anyMatch(s -> s.startsWith("O"));
         System.out.println(isTrue);
+        Boolean isTrue1 = Stream.of("You", "Are", "OK", "OO", "To").parallel().allMatch(s -> s.startsWith("O"));
+        System.out.println(isTrue1);
+        Boolean isTrue2 = Stream.of("You", "Are", "OK", "OO", "To").parallel().noneMatch(s -> s.startsWith("O"));
+        System.out.println(isTrue2);
+
     }
 
     /**
      * optional测试
      */
     private static void optionalTest() throws NoSuchMethodException {
+
+        Optional<String> stringOptional = Optional.of("test1");
+        stringOptional.ifPresent(System.out::println);
+
         Optional<String> optional = Optional.of("test");
-        optional.map(String::toUpperCase);
-        System.out.println(optional);
+        Optional<String> stringOptional1 = optional.map(String::toUpperCase);
+        System.out.println(stringOptional1);
 
         // 当为空的时候获得一个默认值
         String orElse = optional.orElse("");
@@ -211,7 +225,6 @@ public class StreamTest {
         Stream<String> values = Stream.of("1", "22", "333");
         TreeSet<String> treeSet = values.collect(Collectors.toCollection(TreeSet::new));
 
-
         Stream<String> values1 = Stream.of("1", "22", "333");
         List<String> list = values1.collect(Collectors.toList());
 
@@ -222,11 +235,36 @@ public class StreamTest {
         String str = values3.collect(Collectors.joining());
 
         Stream<String> values4 = Stream.of("1", "22", "333");
-        IntSummaryStatistics intSummaryStatistics = values4.collect(Collectors.summarizingInt(Integer::parseInt));
+        String str1 = values4.collect(Collectors.joining(","));
+
+        Stream<String> values5 = Stream.of("1", "22", "333");
+        IntSummaryStatistics intSummaryStatistics = values5.collect(Collectors.summarizingInt(Integer::parseInt));
         System.out.println(intSummaryStatistics.getAverage());
         System.out.println(intSummaryStatistics.getMax());
-    }
 
+        // 将对象数组转化为指定的Map结构
+        Stream<Locale> localeStream = Stream.of(Locale.getAvailableLocales());
+        Map<String, Set<String>> stringMap = localeStream.collect(
+            Collectors
+                .toMap(Locale::getDisplayCountry,
+                    a -> Collections.singleton(a.getDisplayLanguage()),
+                    (a, b) -> {
+                        Set<String> r = new HashSet<>(a);
+                        r.addAll(b);
+                        return r;
+                    },
+                    TreeMap::new));
+
+        // 使用分组函数生成Map
+        Stream<Locale> localeStream1 = Stream.of(Locale.getAvailableLocales());
+        Map<String, List<Locale>> countryToLocales = localeStream1.collect(Collectors.groupingBy(Locale::getCountry));
+        List<Locale> swissLocales = countryToLocales.get("CH");
+        System.out.println(Arrays.toString(swissLocales.toArray()));
+
+
+
+
+    }
 
     public static void main(String[] args) throws IOException, NoSuchMethodException {
         collectResult();

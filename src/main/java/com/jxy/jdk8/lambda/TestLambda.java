@@ -1,9 +1,17 @@
 package com.jxy.jdk8.lambda;
 
+import com.jxy.concurrent.threadbook.chapter04.ThreadPool;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * <类描述>
@@ -16,6 +24,57 @@ import java.util.function.*;
  */
 public class TestLambda {
 
+    public static void main(String[] args) {
+        base();
+    }
+
+    static void base() {
+
+        Comparator<String> comparator =
+                (first, second) -> Integer.compare(first.length(), second.length());
+
+        Comparator<String> comparator1 = Comparator.comparingInt(String::length);
+        String[] words = {"123", "1234", "1"};
+        Arrays.sort(words, comparator1.reversed());
+        System.out.println(Arrays.toString(words));
+
+        EventHandler<ActionEvent> eventHandler = event -> System.out.printf("hello");
+
+        // 捕获方法引用中的this和super
+        ConcurrentGreeter concurrentGreeter = new ConcurrentGreeter();
+        concurrentGreeter.greet();
+
+        // 构造器引用
+        List<String> strs = new ArrayList<>();
+        strs.add("construct");
+        strs.add("construct2");
+        Stream<ConstructRef> constructRefStream = strs.stream().map(ConstructRef::new);
+        List<ConstructRef> collect = constructRefStream.collect(Collectors.toList());
+        System.out.println(collect.get(0).a);
+
+    }
+
+    static class Greeter {
+        public void greet() {
+            System.out.println("hello");
+        }
+    }
+
+    static class ConcurrentGreeter extends Greeter {
+        @Override
+        public void greet() {
+            Thread thread = new Thread(super::greet);
+            thread.start();
+        }
+    }
+
+    static class ConstructRef {
+        private String a;
+
+        public ConstructRef(String a) {
+            this.a = a;
+        }
+    }
 
     /**
      * 例外的透明度，这样是不允许的,只运行在内部处理异常
@@ -50,6 +109,47 @@ public class TestLambda {
     }
 
 
+    interface a {
+        default void test() {
+            System.out.println("testA");
+        }
+    }
+
+    interface b {
+        default void test() {
+            System.out.println("testB");
+        }
+    }
+
+    class c {
+        void test() {
+            System.out.println("testC");
+        }
+    }
+
+    /**
+     * 实现两个含有相同的默认方法的接口时，必须解决冲突，覆盖实现
+     */
+    class d implements a, b {
+
+        @Override
+        public void test() {
+            a.super.test();
+        }
+    }
+
+    /**
+     * 当继承的类和实现的接口存在相同的方法时，是类优先的，这样就会保持jdk8以前的兼容性
+     */
+    class e extends c implements a {
+
+        @Override
+        public void test() {
+            super.test();
+        }
+    }
+
+
     final String secret = "foo";
 
     /**
@@ -67,6 +167,9 @@ public class TestLambda {
         return true;
     }
 
+    /**
+     * forEach
+     */
     static void forEachMap() {
         Map<String, String> m = new HashMap<>();
         m.put("1", "1");
@@ -313,8 +416,5 @@ public class TestLambda {
         map.get(9);             // val9concat
     }
 
-    public static void main(String[] args) {
-        mapInterface();
-    }
 
 }
