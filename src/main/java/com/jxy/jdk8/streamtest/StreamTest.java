@@ -1,7 +1,5 @@
 package com.jxy.jdk8.streamtest;
 
-import net.sf.cglib.core.Local;
-
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.regex.Pattern.compile;
@@ -210,7 +209,7 @@ public class StreamTest {
         // parameter different with result
         Stream<String> values2 = Stream.of("1", "22", "333");
         Integer result = values2.reduce(0, (sum, s) -> sum + s.length(), (sum1, sum2) -> sum1 + sum2);
-        System.out.println(result);
+        System.out.println("reduce:" + result);
         // we can use int stream mapToInt() instead of reduce like below
         Stream<String> values3 = Stream.of("1", "22", "333");
         int result1 = values3.mapToInt(String::length).sum();
@@ -254,6 +253,10 @@ public class StreamTest {
                         return r;
                     },
                     TreeMap::new));
+        // 分隔符收集
+        Stream<String> values6 = Stream.of("1", "22", "333");
+        String collect = values6.collect(Collectors.joining(",", "[", "]"));
+        System.out.println("joining : " + collect);
 
         // 使用分组函数生成Map
         Stream<Locale> localeStream1 = Stream.of(Locale.getAvailableLocales());
@@ -261,12 +264,40 @@ public class StreamTest {
         List<Locale> swissLocales = countryToLocales.get("CH");
         System.out.println(Arrays.toString(swissLocales.toArray()));
 
+        Stream<Locale> localeStream2 = Stream.of(Locale.getAvailableLocales());
+        Map<String, Long> countryToLocales2 = localeStream2.collect(
+            Collectors.groupingBy(Locale::getCountry, Collectors.counting()));
+        System.out.println("CH has locale sum:" + countryToLocales2.get("CH"));
 
+        Stream<Locale> localeStream3 = Stream.of(Locale.getAvailableLocales());
+        Map<String, List<String>> countryToLocales3 = localeStream3.collect(
+            Collectors.groupingBy(Locale::getCountry, Collectors.mapping(Locale::getLanguage, Collectors.toList())));
+        System.out.println("CH has locale language:" + countryToLocales3.get("CH"));
 
+    }
+
+    private static void parallelStream() {
+        double[] values = new double[10];
+        Arrays.parallelSetAll(values, i -> i);
+        int n = 3;
+        double[] sums = Arrays.copyOf(values, values.length);
+        Arrays.parallelPrefix(sums, Double::sum);
+        System.out.println("sums = " + Arrays.toString(sums));
+
+        int start = n - 1;
+        double[] doubles = IntStream.range(start, sums.length).mapToDouble(i -> {
+            double prefix = i == start ? 0 : sums[i - n];
+            return (sums[i] - prefix) / n;
+        }).toArray();
+
+        System.out.println(Arrays.toString(doubles));
 
     }
 
     public static void main(String[] args) throws IOException, NoSuchMethodException {
-        collectResult();
+        //reduceTest();
+        //collectResult();
+        parallelStream();
     }
+
 }
