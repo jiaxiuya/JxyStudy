@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jiaxiuya
+ * VM Args：-Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError
  *
  * @Date 2016/5/11 19:25.
  * @Version nothing
@@ -22,7 +22,6 @@ public class HeapOOM {
         while (true) {
             oomObjectList.add(new OOMObject());
         }
-
 
     }
 }

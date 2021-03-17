@@ -10,50 +10,43 @@ package com.jxy.jvmtest;
  */
 public class FinalizeEscapeGC {
 
-    public static FinalizeEscapeGC finalizeEscapeGC = null;
+    public static FinalizeEscapeGC SAVE_HOOK = null;
 
+    public void isAlive() { System.out.println("yes, i am still alive :)"); }
+
+    /**
+     * 对象拯救自己最后的机会，gc标记阶段会会执行，且只执行一次
+     * 但是不建议使用，因为之前的时间顺序太不可控
+     * 有些教材可以用来清理外部依赖对象，但是try finally可以做的更好
+     * 咱们忘了这个方法吧
+     *
+     * @throws Throwable
+     */
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        System.out.println("finalize方法被调用");
-        FinalizeEscapeGC.finalizeEscapeGC = this;
+        System.out.println("finalize method executed!");
+        FinalizeEscapeGC.SAVE_HOOK = this;
     }
 
-    public static void main(String[] args) {
-        // 第一次拯救自己
-        finalizeEscapeGC = new FinalizeEscapeGC();
-
-        finalizeEscapeGC= null;
+    public static void main(String[] args) throws Throwable {
+        //对象第一次成功拯救自己
+        SAVE_HOOK = new FinalizeEscapeGC();
+        SAVE_HOOK = null;
         System.gc();
-
-        try {
-            // 由于gc方法的优先级很低，所以先睡眠0.5秒
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if(finalizeEscapeGC != null){
-            System.out.println("第一次拯救成功");
-        }else{
-            System.out.printf("第一次拯救失败");
+        // 因为Finalizer方法优先级很低，暂停0.5秒，以等待它
+        Thread.sleep(500);
+        if (SAVE_HOOK != null) { SAVE_HOOK.isAlive(); } else {
+            System.out.println("no, i am dead :(");
         }
 
-
-        // 第二次拯救失败
-        finalizeEscapeGC = null;
+        // 下面这段代码与上面的完全相同，但是这次自救却失败了
+        SAVE_HOOK = null;
         System.gc();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(finalizeEscapeGC != null){
-            System.out.println("第二次拯救成功");
-        }else{
-            System.out.printf("第二次拯救失败");
-        }
-
+        // 因为Finalizer方法优先级很低，暂停0.5秒，以等待它
+        Thread.sleep(500);
+        if (SAVE_HOOK != null) {
+            SAVE_HOOK.isAlive();
+        } else { System.out.println("no, i am dead :("); }
     }
 }
