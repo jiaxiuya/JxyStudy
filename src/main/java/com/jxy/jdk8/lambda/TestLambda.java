@@ -1,13 +1,7 @@
 package com.jxy.jdk8.lambda;
 
-import com.jxy.concurrent.threadbook.chapter04.ThreadPool;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.*;
 import java.util.stream.Collectors;
@@ -38,7 +32,7 @@ public class TestLambda {
         Arrays.sort(words, comparator1.reversed());
         System.out.println(Arrays.toString(words));
 
-        EventHandler<ActionEvent> eventHandler = event -> System.out.printf("hello");
+//        EventHandler<ActionEvent> eventHandler = event -> System.out.printf("hello");
 
         // 捕获方法引用中的this和super
         ConcurrentGreeter concurrentGreeter = new ConcurrentGreeter();
